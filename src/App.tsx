@@ -42,6 +42,8 @@ function App() {
 
   const clearResponse = () => {
     setTracks([]);
+    setSearch("");
+    setCount(0);
   };
 
   return (
@@ -85,18 +87,20 @@ function App() {
           <Grid container item>
             <TrackTable tracks={tracks} />
           </Grid>
-          <Grid container item>
-            <Pagination
-              count={count}
-              page={page}
-              onChange={(e, newPage) => {
-                if (newPage !== page) {
-                  setPage(newPage);
-                  getData(newPage);
-                }
-              }}
-            />
-          </Grid>
+          {count > 0 && (
+            <Grid container item>
+              <Pagination
+                count={count}
+                page={page}
+                onChange={(e, newPage) => {
+                  if (newPage !== page) {
+                    setPage(newPage);
+                    getData(newPage);
+                  }
+                }}
+              />
+            </Grid>
+          )}
         </>
       )}
     </Grid>

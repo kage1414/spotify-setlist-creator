@@ -15,6 +15,7 @@ interface TrackTableProps {
 }
 
 export const TrackTable: React.FC<TrackTableProps> = ({ tracks }) => {
+  if (!tracks.length) return null;
   return (
     <TableContainer>
       <Table>
