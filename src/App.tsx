@@ -7,8 +7,8 @@ import {
   TextField,
 } from "@mui/material";
 import axios from "axios";
-import { TrackItem } from "./TrackItem";
 import { Track } from "@spotify/web-api-ts-sdk";
+import { TrackTable } from "./TrackTable";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -83,6 +83,9 @@ function App() {
       ) : (
         <>
           <Grid container item>
+            <TrackTable tracks={tracks} />
+          </Grid>
+          <Grid container item>
             <Pagination
               count={count}
               page={page}
@@ -93,12 +96,6 @@ function App() {
                 }
               }}
             />
-          </Grid>
-
-          <Grid container item>
-            {tracks.map((track, idx) => (
-              <TrackItem track={track} key={`${track.id}-${idx}`} />
-            ))}
           </Grid>
         </>
       )}
