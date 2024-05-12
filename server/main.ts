@@ -4,8 +4,8 @@ import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 export const app = express();
 
 const sdk = SpotifyApi.withClientCredentials(
-  "90b7abc45a924cd294517775dcab93da",
-  "f161199122444f41be668409ea20dac0"
+  process.env.SPOTIFY_CLIENT_ID ?? "",
+  process.env.SPOTIFY_CLIENT_SECRET ?? ""
 );
 
 app.get("/api/search", async ({ query: { search, method, page } }, res) => {
