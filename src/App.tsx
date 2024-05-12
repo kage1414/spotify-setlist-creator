@@ -33,7 +33,7 @@ function App() {
         console.log(res);
         setTracks(res.data.tracks.items);
         setCount(Math.floor(res.data.tracks.total / 20));
-        if (res.data.tracks.items.length === 0) {
+        if (res.data.tracks.total === 0) {
           setNoResults(true);
         }
       })
