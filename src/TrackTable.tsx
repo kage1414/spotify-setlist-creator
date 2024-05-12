@@ -4,6 +4,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  Typography,
 } from "@mui/material";
 
 import { Track } from "@spotify/web-api-ts-sdk";
@@ -12,11 +13,17 @@ import { TrackRow } from "./TrackRow";
 
 interface TrackTableProps {
   tracks: Track[];
+  noResults: boolean;
 }
 
-export const TrackTable: React.FC<TrackTableProps> = ({ tracks }) => {
-  if (!tracks.length) return null;
-  return (
+export const TrackTable: React.FC<TrackTableProps> = ({
+  tracks,
+  noResults,
+}) => {
+  if (!tracks.length && !noResults) return null;
+  return noResults ? (
+    <Typography>No Results Found</Typography>
+  ) : (
     <TableContainer>
       <Table>
         <TableHead>

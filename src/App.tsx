@@ -7,7 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import axios from "axios";
-import { Track } from "@spotify/web-api-ts-sdk";
+import { PartialSearchResult, Track } from "@spotify/web-api-ts-sdk";
 import { TrackTable } from "./TrackTable";
 
 function App() {
@@ -17,17 +17,25 @@ function App() {
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [noResults, setNoResults] = useState(false);
 
   const getData = (page: number) => {
     setLoading(true);
-    axios({
-      method: "GET",
-      params: { search, method, page: page - 1 },
-      url: "/api/search",
-    })
+    setNoResults(false);
+    axios<Required<Pick<PartialSearchResult, "artists" | "albums" | "tracks">>>(
+      {
+        method: "GET",
+        params: { search, method, page: page - 1 },
+        url: "/api/search",
+      }
+    )
       .then((res) => {
+        console.log(res);
         setTracks(res.data.tracks.items);
         setCount(Math.floor(res.data.tracks.total / 20));
+        if (res.data.tracks.items.length === 0) {
+          setNoResults(true);
+        }
       })
       .finally(() => {
         setLoading(false);
@@ -41,6 +49,7 @@ function App() {
   };
 
   const clearResponse = () => {
+    setNoResults(false);
     setTracks([]);
     setSearch("");
     setCount(0);
@@ -85,7 +94,7 @@ function App() {
       ) : (
         <>
           <Grid container item>
-            <TrackTable tracks={tracks} />
+            <TrackTable tracks={tracks} noResults={noResults} />
           </Grid>
           {count > 0 && (
             <Grid container item>
