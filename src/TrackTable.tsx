@@ -21,6 +21,7 @@ export const TrackTable: React.FC<TrackTableProps> = ({
   noResults,
 }) => {
   if (!tracks.length && !noResults) return null;
+
   return noResults ? (
     <Typography>No Results Found</Typography>
   ) : (
